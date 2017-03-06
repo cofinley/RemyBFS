@@ -7,6 +7,7 @@ using namespace std;
 
 int main(int argc, char *argv[])
 {
+
   int maze_size, dimension;
     
   if (argc == 1) {
