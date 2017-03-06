@@ -27,44 +27,47 @@ void printShortestPath(Maze &X)
 	Position theStart, theExit;
 
 	// fill in the remaining code
-	current, theStart = X.getStart();
+	theStart = X.getStart();
 	theExit = X.getExit();
 
+    X.visit(theStart);
 	Q.push(theStart);
+    bool isFinished = false;
 
 	while (!Q.empty())
 	{
+
+
 		current = Q.front(); // ??? "serve an element from the queue into current"
+		Q.pop();
 
 		// iterate over possible neighbor directions
-		for (dir = DOWN; next_direction(dir) != NONE; dir = next_direction(dir))
+		for (dir = DOWN; dir != NONE; dir = next_direction(dir))
 		{
-			cout << "Direction: " << dir << endl;
 			if (X.isOpen(current.Neighbor(dir)))
 			{
 				neighbor = current.Neighbor(dir);
+                X.visit(neighbor);
 				// if the current position is P and Q is an open
 				// neighbor of P, then at the time we visit Q and append
 				// it to the queue, we set pred[Q.row][Q.col] to the Position P.
-				pred[neighbor.col][neighbor.row] = current;
+				pred[neighbor.row][neighbor.col] = current;
 
 				if (X.isExit(neighbor))
 				{
 					// print path
-					cout << "Exit found" << endl;
 					printPredecessorPath(pred, neighbor);
+                    isFinished = true;
+                    break;
 				}
 				else
 				{
-					Q.push(neighbor);
+                    Q.push(neighbor);
 				}
 			}
 		}
-    if (Q.empty())
-		{
-			cout << "No way out!" << endl;
-			break;
-		}
 	}
+    if (Q.empty() && !isFinished)
+            cout << "No way out!" << endl;
 }
 
