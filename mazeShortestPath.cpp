@@ -74,9 +74,11 @@ void printShortestPath(Maze &X)
 		}
 	}
 	if (Q.empty() && !isFinished)
+	{
 		// No exit found, queue eventually ran out
 		// Book-keeping bool used to make sure this is only called when appropriate
 		// (queue runs out either way)
 		cout << "No way out!" << endl;
+	}
 }
 
