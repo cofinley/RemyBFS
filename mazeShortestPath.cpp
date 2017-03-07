@@ -32,11 +32,11 @@ void printShortestPath(Maze &X)
 	theExit = X.getExit();
 
 	// mark start as visited, push onto queue
-    X.visit(theStart);
+	X.visit(theStart);
 	Q.push(theStart);
 
 	// book-keeping bool for final break of loop
-    bool isFinished = false;
+	bool isFinished = false;
 
 	while (!Q.empty())
 	{
@@ -51,7 +51,7 @@ void printShortestPath(Maze &X)
 			{
 				// If neighbor hasn't been visited, visit it
 				neighbor = current.Neighbor(dir);
-                X.visit(neighbor);
+				X.visit(neighbor);
 				// if the current position is P and Q is an open
 				// neighbor of P, then at the time we visit Q and append
 				// it to the queue, we set pred[Q.row][Q.col] to the Position P.
@@ -62,18 +62,18 @@ void printShortestPath(Maze &X)
 					// Exit found, print path
 					printPredecessorPath(pred, neighbor);
 					// Mark book-keeping bool, used in final if statement below
-                    isFinished = true;
-                    break;
+					isFinished = true;
+					break;
 				}
 				else
 				{
 					// Exit not found, just enqueue the neighbor for later use
-                    Q.push(neighbor);
+					Q.push(neighbor);
 				}
 			}
 		}
 	}
-    if (Q.empty() && !isFinished)
+	if (Q.empty() && !isFinished)
 		// No exit found, queue eventually ran out
 		// Book-keeping bool used to make sure this is only called when appropriate
 		// (queue runs out either way)
