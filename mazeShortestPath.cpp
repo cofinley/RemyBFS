@@ -1,3 +1,5 @@
+// Connor Finley, 3/6/2017
+
 #include "mazeShortestPath.h"
 #include <queue>
 #include <iostream>
