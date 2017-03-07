@@ -20,7 +20,8 @@ void printShortestPath(Maze &X)
 	queue<Position> Q; // positions queue
 
 	int msize = X.getSize();
-	vector< vector<Position> > pred(msize, vector<Position>(msize, NULLPOS)); // previous (predecessor) position
+	// Initialize previous (predecessor) position 2D array
+	vector< vector<Position> > pred(msize, vector<Position>(msize, NULLPOS)); 
 
 	Position current, neighbor;
 	direction dir;
@@ -30,22 +31,25 @@ void printShortestPath(Maze &X)
 	theStart = X.getStart();
 	theExit = X.getExit();
 
+	// mark start as visited, push onto queue
     X.visit(theStart);
 	Q.push(theStart);
+
+	// book-keeping bool for final break of loop
     bool isFinished = false;
 
 	while (!Q.empty())
 	{
-
-
-		current = Q.front(); // ??? "serve an element from the queue into current"
+		// serve an element from the queue into current
+		current = Q.front(); 
 		Q.pop();
 
-		// iterate over possible neighbor directions
+		// Iterate over all possible neighbor directions
 		for (dir = DOWN; dir != NONE; dir = next_direction(dir))
 		{
 			if (X.isOpen(current.Neighbor(dir)))
 			{
+				// If neighbor hasn't been visited, visit it
 				neighbor = current.Neighbor(dir);
                 X.visit(neighbor);
 				// if the current position is P and Q is an open
@@ -55,19 +59,24 @@ void printShortestPath(Maze &X)
 
 				if (X.isExit(neighbor))
 				{
-					// print path
+					// Exit found, print path
 					printPredecessorPath(pred, neighbor);
+					// Mark book-keeping bool, used in final if statement below
                     isFinished = true;
                     break;
 				}
 				else
 				{
+					// Exit not found, just enqueue the neighbor for later use
                     Q.push(neighbor);
 				}
 			}
 		}
 	}
     if (Q.empty() && !isFinished)
-            cout << "No way out!" << endl;
+		// No exit found, queue eventually ran out
+		// Book-keeping bool used to make sure this is only called when appropriate
+		// (queue runs out either way)
+		cout << "No way out!" << endl;
 }
 
